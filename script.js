@@ -32,24 +32,24 @@ function playRound(playerSelection, computerSelection) {
     }
     else if (playerSelection == "rock") {
         if (computerSelection == "scissors")
-            return "player";
+            console.log("player") //return "player";
         else
-            return "computer";
+            console.log("computer") //return "computer";
     }
     else if (playerSelection == "paper") {
         if (computerSelection == "rock") {
-            return "player"
+            console.log("player") //return "player"
         }
         else {
-            return "computer"
+            console.log("computer") // return "computer"
         }
     }
     else {
         if (computerSelection == "rock") {
-            return "computer"
+            console.log("computer")//return "computer"
         }
         else    
-            return "player"
+            console.log("player") //return "player"
     }
 
 }
@@ -61,7 +61,7 @@ function game(){
     var playerScore = 0;
     var computerScore = 0;
 
-    for (i=0; i<5; i++) {
+    //for (i=0; i<5; i++) {
         const playerSelection = prompt("Enter rock, paper or scissors: ");
         const computerSelection = computerPlay();
 
@@ -81,7 +81,7 @@ function game(){
             console.log("This round is a tie!");
         }
         console.log("Player score " + playerScore + ". Computer score " + computerScore + ".")
-    }
+    //}
     
     if (playerScore > computerScore) {
         console.log("Player wins!");
@@ -96,4 +96,16 @@ function game(){
     console.log("The final score is computer " + computerScore + ", player " + playerScore + ".");
 }
 
-game();
+
+const btns = document.querySelectorAll('button');
+
+// we use the .forEach method to iterate through each button
+btns.forEach((button) => {
+
+    // and for each one we add a 'click' listener
+    button.addEventListener('click', () => {
+      playRound(button.id, computerPlay());
+    });
+  });
+
+//game();
