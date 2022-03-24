@@ -32,24 +32,24 @@ function playRound(playerSelection, computerSelection) {
     }
     else if (playerSelection == "rock") {
         if (computerSelection == "scissors")
-            console.log("player") //return "player";
+            return "player";
         else
-            console.log("computer") //return "computer";
+            return "computer";
     }
     else if (playerSelection == "paper") {
         if (computerSelection == "rock") {
-            console.log("player") //return "player"
+            return "player"
         }
         else {
-            console.log("computer") // return "computer"
+            return "computer"
         }
     }
     else {
         if (computerSelection == "rock") {
-            console.log("computer")//return "computer"
+            return "computer"
         }
         else    
-            console.log("player") //return "player"
+            return "player"
     }
 
 }
@@ -57,29 +57,40 @@ function playRound(playerSelection, computerSelection) {
 
 //function game()
 //play rock paper scissors 5 times and keeps track of the winner
-function game(){
+function game(playerChoice){
     var playerScore = 0;
     var computerScore = 0;
 
-    //for (i=0; i<5; i++) {
-        const playerSelection = prompt("Enter rock, paper or scissors: ");
-        const computerSelection = computerPlay();
+    const playerSelection = playerChoice;
+    const computerSelection = computerPlay();
 
-        console.log("You choose " + playerSelection + ". Computer choose " + computerSelection + ".");
+    const container = document.querySelector('#container');
 
-        winner = playRound(playerSelection, computerSelection);
+    const choices = document.createElement('div');
+    const winnerDiv = document.createElement('div');
+    choices.textContent = "You choose " + playerSelection + ". Computer choose " + computerSelection + ".";
+    container.appendChild(choices);
+
+    //console.log("You choose " + playerSelection + ". Computer choose " + computerSelection + ".");
+
+    winner = playRound(playerSelection, computerSelection);
+
+    
+    //winnerDiv.textContent = "You choose " + playerSelection + ". Computer choose " + computerSelection + ".";
+    //container.appendChild(choices);    
 
         if (winner == "computer") {
             computerScore += 1;
-            console.log("Computer wins this round!");
+            winnerDiv.textContent = "Computer wins this round!"
         }
         else if (winner == "player") {
             playerScore += 1;
-            console.log("Player wins this round!");
+            winnerDiv.textContent = "Player wins this round!"
         }
         else {
-            console.log("This round is a tie!");
+            winnerDiv.textContent = "This round is a tie!"
         }
+        container.appendChild(winnerDiv);
         console.log("Player score " + playerScore + ". Computer score " + computerScore + ".")
     //}
     
@@ -104,8 +115,10 @@ btns.forEach((button) => {
 
     // and for each one we add a 'click' listener
     button.addEventListener('click', () => {
-      playRound(button.id, computerPlay());
+      game(button.id);
     });
-  });
+});
+
+
 
 //game();
