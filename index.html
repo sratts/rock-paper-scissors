@@ -7,22 +7,54 @@
 
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
+    <script src="https://kit.fontawesome.com/a52edff6b4.js" crossorigin="anonymous"></script>
 
-    <title>Rock Paper Scissors</title>
+
+    <title>Rock, Paper, Scissors</title>
 </head>
 <body>
 
     <h1>Rock, Paper, Scissors?</h1>
     
-    <div>Choose your weapon:</div>
-
-    <div class="button-container">
-        <button id="rock" class="selection-button"> Rock </button>
-        <button id="paper" class="selection-button"> Paper </button>
-        <button id="scissors" class="selection-button"> Scissors </button>
+    <div class="content">
+        <div id="result"></div>
     </div>
 
-    <div id="result"></div>
+    <div class="game">
+
+        <div  class="player-container">
+
+            <div class="user-name"> <i class="fa-solid fa-user fa-lg"></i> You </div>
+
+            <div id="player-score" class="score"> Score: 0</div>
+
+            <div class="button-container">
+                <button id="rock" class="selection-button"> Rock </button>
+                <button id="paper" class="selection-button"> Paper </button>
+                <button id="scissors" class="selection-button"> Scissors </button>
+            </div>
+
+        </div>
+
+        <div class="player-container">
+
+            <div class="user-name"><i class="fa-solid fa-robot fa-lg"></i> Computer </div>
+
+            <div id="computer-score" class="score"> Score: 0</div>
+
+            <div class="button-container">
+                <button id="rock-comp" class="selection-button"> Rock </button>
+                <button id="paper-comp" class="selection-button"> Paper </button>
+                <button id="scissors-comp" class="selection-button"> Scissors </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div>
+        <button id="reset">Start Again</button>
+    </div>
 
 </body>
 </html>

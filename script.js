@@ -1,39 +1,43 @@
+//variables to keep scores
+let playerScore = 0;
+let computerScore = 0;
 
-const btns = document.querySelectorAll('button');
+//elements to show the scores
+const playerScoreContainer = document.getElementById("player-score");
+const computerScoreContainer = document.getElementById("computer-score");
 
-// we use the .forEach method to iterate through each button
-btns.forEach((button) => {
+//element to print the results of each round
+const results = document.getElementById("result");
 
-    // and for each one we add a 'click' listener
+//player buttons
+const playerSelectionButtons = document.querySelectorAll('#rock, #paper, #scissors');
+
+//get the reset button
+const resetButton = document.getElementById("reset");
+
+// add  a click eventListener for each player button
+playerSelectionButtons.forEach((button) => {
     button.addEventListener('click', () => {
       playRound(button.id);
     });
-
 });
 
-//variables to keep scores
-var playerScore = 0;
-var computerScore = 0;
+//add a click eventListener for the Reset button
+resetButton.addEventListener('click', () => {
+    resetGame();
+});
 
-// if (playerScore > computerScore) {
-//     console.log("Player wins!");
-// }
-// else if (computerScore > playerScore) {
-//     console.log("Computer wins!");
-// }
-// else {
-//     console.log("It's a tie!");
-// }
 
-// console.log("The final score is computer " + computerScore + ", player " + playerScore + ".");
+//--------------------//
+//     FUNCTIONS      //
+//--------------------//
 
 //function computerPlay
 //make a random number between 1 and 3
 //assign each number a value of one of rock, paper, scissors
 //return the associated rock, paper, scissors as the computer's choice
-
 function computerPlay(){
-    randomNum = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+    randomNum = Math.floor(Math.random() * 3);
 
     if (randomNum == 1) {
         return "rock";
@@ -46,8 +50,7 @@ function computerPlay(){
     }
 }
 
-//function chooseRound
-//play a round of rock paper scissors
+//function chooseWinner
 //take two variables, playerSelection and computerSelection
 //compare them and decide who is winner
 //return the winner
@@ -83,50 +86,82 @@ function chooseWinner(playerSelection, computerSelection) {
 }
 
 
-//function game()
-//play rock paper scissors 5 times and keeps track of the winner
+//function playRound()
+//play rock paper scissors until someone gets to 5 points and keeps track of the winner
 function playRound(playerSelection){
     
-    //set computer choice
-    const computerSelection = computerPlay();
-
-    //choose the winner
-    const winner = chooseWinner(playerSelection, computerSelection);
+    const computerSelection = computerPlay(); //set computer choice
+    const winner = chooseWinner(playerSelection, computerSelection); //choose the winner
    
     //get and create all elements
-    const results = document.getElementById("result");
     const choices = document.createElement('div');
     const winnerDiv = document.createElement('div');
-
-    //clear previous results
-    while (results.hasChildNodes()) {
-      results.removeChild(results.firstChild);
-    }
-
-    choices.textContent = "You choose " + playerSelection + ". Computer choose " + computerSelection + ".";
-    //results.appendChild(choices);
-
     const resultButton = document.getElementById(playerSelection);
-    resultButton.classList.add('red');
-    console.log(resultButton)
-   
+    const resultButtonComp = document.getElementById(computerSelection+'-comp');
 
-    if (winner == "computer") {
-        computerScore += 1;
-        choices.textContent += "Computer wins this round!"
-    }
-    else if (winner == "player") {
-        playerScore += 1;
-        choices.textContent += "Player wins this round!"
-    }
-    else {
-        choices.textContent += "This round is a tie!"
-    }
 
-    results.appendChild(choices);
-    console.log("Player score " + playerScore + ". Computer score " + computerScore + ".")
+    if (playerScore < 5 && computerScore < 5) {
+        
+        clearResults(); //clear previous round results
 
+        choices.textContent = "You choose " + playerSelection + ". Computer choose " + computerSelection + ". ";
+    
+        resultButton.classList.add('button-selected');
+        resultButtonComp.classList.add('button-selected');
+    
+        if (winner == "computer") {
+            computerScore += 1;
+            choices.textContent += "Computer wins this round!"
+        }
+        else if (winner == "player") {
+            playerScore += 1;
+            choices.textContent += "Player wins this round!"
+        }
+        else {
+            choices.textContent += "This round is a tie!"
+        }
+
+        results.appendChild(choices);
+
+        if (playerScore >= 5 ){
+            winnerDiv.textContent = "Player Wins This Game! Replay?" 
+            results.appendChild(winnerDiv);  
+        }
+        else if (computerScore >= 5) {
+            winnerDiv.textContent = "Computer Wins This Game! Replay?" 
+            results.appendChild(winnerDiv); 
+        }
+        
+        playerScoreContainer.textContent = "Score: " + playerScore;
+        computerScoreContainer.textContent = "Score: " + computerScore;
+    }
 }
 
+//function clearResults
+//clears the previous selections and results
+function clearResults() {
+    //remove all children from results
+    while (results.hasChildNodes()) {
+        results.removeChild(results.firstChild);
+      }
+  
+      const allbtns = document.querySelectorAll('.button-selected');
 
-//game();
+      //remove classes
+      allbtns.forEach((button) => {
+          button.classList.remove('button-selected')
+      });
+}
+
+//function reset game
+//clear the scores
+//clear most recent selections.
+function resetGame() {
+    clearResults(); 
+
+    playerScore = 0;
+    computerScore = 0; 
+
+    playerScoreContainer.textContent = "Score: " + playerScore;
+    computerScoreContainer.textContent = "Score: " + computerScore;
+}
